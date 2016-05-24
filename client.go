@@ -5,7 +5,8 @@ import (
 	"errors"
 	"fmt"
 	"math/rand"
-	"net/url"
+//	"net/url"
+	"strings"
 	"time"
 
 	"github.com/golang/protobuf/proto"
@@ -296,8 +297,9 @@ func (c *Client) SendChatMessage(conversationId, message string) (*hangouts.Send
 
 	linkData := &hangouts.LinkData{}
 	// check if it is a link
-	_, err := url.Parse(message)
-	if err == nil {
+	//_, err := url.Parse(message)
+	//if err == nil {
+	if strings.Contains(message,"://") {
 		segmentType = hangouts.SegmentType_SEGMENT_TYPE_LINK
 		linkData.LinkTarget = &message
 	}
@@ -322,7 +324,7 @@ func (c *Client) SendChatMessage(conversationId, message string) (*hangouts.Send
 		//ExistingMedia: &hangouts.ExistingMedia{Photo: &hangouts.Photo{}}, //picassa photos
 	}
 	response := &hangouts.SendChatMessageResponse{}
-	err = c.ProtobufApiRequest("conversations/sendchatmessage", request, response)
+	err := c.ProtobufApiRequest("conversations/sendchatmessage", request, response)
 	if err != nil {
 		return nil, err
 	}
