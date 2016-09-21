@@ -5,12 +5,11 @@ import (
 	"errors"
 	"fmt"
 	"math/rand"
-//	"net/url"
 	"strings"
 	"time"
 
 	"github.com/golang/protobuf/proto"
-	"github.com/gpavlidi/go-hangups/proto"
+	"github.com/inhies/go-hangups/proto"
 )
 
 type Client struct {
@@ -299,7 +298,7 @@ func (c *Client) SendChatMessage(conversationId, message string) (*hangouts.Send
 	// check if it is a link
 	//_, err := url.Parse(message)
 	//if err == nil {
-	if strings.Contains(message,"://") {
+	if strings.Contains(message, "://") {
 		segmentType = hangouts.SegmentType_SEGMENT_TYPE_LINK
 		linkData.LinkTarget = &message
 	}
